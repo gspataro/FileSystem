@@ -1,0 +1,24 @@
+{
+    "name": "gspataro/filesystem",
+    "license": "MIT",
+    "description": "A PHP FileSystem component",
+    "keywords": ["filesystem"],
+    "version": "0.1.0",
+    "require-dev": {
+        "phpunit/phpunit": "9.5.*",
+        "mikey179/vfsstream": "1.6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "GSpataro\\FileSystem\\": "src/FileSystem/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GSpataro\\Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
