@@ -36,7 +36,7 @@ final class Storage
      * Open a file
      *
      * @param string $path
-     * @return Directory
+     * @return File
      */
 
     public function openFile(string $path): File
