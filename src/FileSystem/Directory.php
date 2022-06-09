@@ -165,6 +165,7 @@ class Directory extends SplFileInfo
 
     public function move(string $newPath, bool $overwrite = false): Directory
     {
+        $this->existsOrDie();
         $newDir = new Directory($newPath);
 
         if (!$overwrite && $newDir->exists()) {
@@ -190,6 +191,7 @@ class Directory extends SplFileInfo
 
     public function copy(string $newPath, bool $overwrite = false): Directory
     {
+        $this->existsOrDie();
         $newDir = new Directory($newPath);
 
         if (!$overwrite && $newDir->exists()) {
