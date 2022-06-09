@@ -132,6 +132,7 @@ class File extends SplFileInfo
 
     public function import(): mixed
     {
+        $this->existsOrDie();
         $this->matchExtensionsOrDie("php");
         return require_once($this->getPathname());
     }
@@ -159,6 +160,7 @@ class File extends SplFileInfo
 
     public function move(string $newPath, bool $overwrite = false): File
     {
+        $this->existsOrDie();
         $newFile = new File($newPath);
 
         if (!$overwrite && $newFile->exists()) {
@@ -184,6 +186,7 @@ class File extends SplFileInfo
 
     public function copy(string $newPath, bool $overwrite = false): File
     {
+        $this->existsOrDie();
         $newFile = new File($newPath);
 
         if (!$overwrite && $newFile->exists()) {
