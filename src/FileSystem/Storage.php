@@ -5,6 +5,14 @@ namespace GSpataro\FileSystem;
 final class Storage
 {
     /**
+     * Store aliases
+     *
+     * @var array
+     */
+
+    private array $aliases = [];
+
+    /**
      * Initialize storage object
      *
      * @param string $rootDir
@@ -18,6 +26,41 @@ final class Storage
                 "Root directory not found: '{$rootDir}'."
             );
         }
+
+        if (!str_ends_with($this->rootDir, '/')) {
+            $this->rootDir .= '/';
+        }
+    }
+
+    /**
+     * Add a directory alias
+     *
+     * @param string $alias
+     * @param string $path
+     * @return void
+     */
+
+    public function addAlias(string $alias, string $path): void
+    {
+        $prefix = !str_starts_with($path, $this->rootDir) ? $this->rootDir : '';
+        $suffix = !str_ends_with($path, '/') ? '/' : '';
+
+        $this->aliases['{' . $alias . '}'] = $prefix . $path . $suffix;
+    }
+
+    /**
+     * Prepare path
+     *
+     * @param string $path
+     * @return string
+     */
+
+    private function preparePath(string $path): string
+    {
+        $path = strtr($path, $this->aliases);
+        $prefix = !str_starts_with($path, $this->rootDir) ? $this->rootDir : '';
+
+        return $prefix . $path;
     }
 
     /**
@@ -29,7 +72,7 @@ final class Storage
 
     public function openDir(string $path): Directory
     {
-        return new Directory("{$this->rootDir}/{$path}");
+        return new Directory($this->preparePath($path));
     }
 
     /**
@@ -41,6 +84,6 @@ final class Storage
 
     public function openFile(string $path): File
     {
-        return new File("{$this->rootDir}/{$path}");
+        return new File($this->preparePath($path));
     }
 }
